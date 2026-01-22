@@ -55,15 +55,14 @@ for name in possible_profile_names:
 class NewsletterSubscription(BaseModel):
     email: EmailStr
 
-# Contact/Demo Request Model
+# Contact/General Inquiry Model
 class ContactForm(BaseModel):
-    first_name: str
-    last_name: str
+    name: str
     email: EmailStr
-    phone: str
-    company: str
-    message: Optional[str] = None
-    demo_date: Optional[str] = None
+    phone: Optional[str] = None
+    company: Optional[str] = None
+    inquiry_type: str
+    message: str
 
 # Brochure Request Model
 class BrochureForm(BaseModel):
@@ -104,6 +103,18 @@ class TalkToSalesForm(BaseModel):
     phone: str
     company: Optional[str] = None
     message: str
+
+# Request Demo Model
+class RequestDemoFormModel(BaseModel):
+    first_name: str
+    last_name: str
+    email: EmailStr
+    phone: str
+    company_name: str
+    company_size: Optional[str] = None
+    preferred_demo_date: str
+    preferred_demo_time: Optional[str] = None
+    additional_information: Optional[str] = None
 
 @router.post("/newsletter")
 async def subscribe_newsletter(
@@ -153,17 +164,16 @@ async def submit_contact_form(
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db)
 ):
-    """Submit contact/demo request form"""
+    """Submit general inquiry form"""
     try:
         # Save to database
         form_data = {
-            "first_name": form.first_name,
-            "last_name": form.last_name,
+            "name": form.name,
             "email": form.email,
             "phone": form.phone,
             "company": form.company,
-            "message": form.message,
-            "demo_date": form.demo_date
+            "inquiry_type": form.inquiry_type,
+            "message": form.message
         }
         db_service.save_contact_form(db, form_data)
         
@@ -175,7 +185,7 @@ async def submit_contact_form(
         # Send notification to admin
         background_tasks.add_task(
             email_service.send_form_notification,
-            "Contact/Demo Request",
+            "General Inquiry Form",
             notification_data
         )
         
@@ -183,14 +193,14 @@ async def submit_contact_form(
         background_tasks.add_task(
             email_service.send_confirmation_email,
             form.email,
-            "Demo Request",
+            "General Inquiry",
             None,
-            f"{form.first_name} {form.last_name}"
+            form.name
         )
         
         return {
             "success": True,
-            "message": "Demo request submitted successfully"
+            "message": "Your inquiry has been submitted successfully. We'll get back to you shortly."
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing form: {str(e)}")
@@ -371,6 +381,57 @@ async def talk_to_sales(
         return {
             "success": True,
             "message": "Your message has been sent. Our sales team will contact you shortly."
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing form: {str(e)}")
+
+@router.post("/request-demo")
+async def submit_request_demo(
+    form: RequestDemoFormModel,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
+):
+    """Submit request demo form"""
+    try:
+        # Save to database
+        form_data = {
+            "first_name": form.first_name,
+            "last_name": form.last_name,
+            "email": form.email,
+            "phone": form.phone,
+            "company_name": form.company_name,
+            "company_size": form.company_size,
+            "preferred_demo_date": form.preferred_demo_date,
+            "preferred_demo_time": form.preferred_demo_time,
+            "additional_information": form.additional_information
+        }
+        db_service.save_request_demo_form(db, form_data)
+        
+        # Export to Excel in background
+        background_tasks.add_task(excel_service.export_all_forms, db)
+        
+        notification_data = {**form_data, "submitted_at": datetime.now().isoformat()}
+        
+        # Send notification to admin
+        background_tasks.add_task(
+            email_service.send_form_notification,
+            "Request Demo",
+            notification_data
+        )
+        
+        # Send confirmation to user
+        full_name = f"{form.first_name} {form.last_name}"
+        background_tasks.add_task(
+            email_service.send_confirmation_email,
+            form.email,
+            "Demo Request",
+            None,
+            full_name
+        )
+        
+        return {
+            "success": True,
+            "message": "Your demo request has been submitted successfully. We'll contact you shortly to schedule your demo."
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing form: {str(e)}")
