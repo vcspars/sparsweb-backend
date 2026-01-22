@@ -5,14 +5,20 @@ from typing import Optional, List
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 from services.email_service import EmailService
 from services.chatbot_service import ChatbotService
 from routers import forms, chatbot, download
 from database import init_db
 
-# Load environment variables
-load_dotenv()
+# Load environment variables - specify the path explicitly
+env_path = Path(__file__).parent / '.env'
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
+else:
+    # Fallback: try loading from current directory
+    load_dotenv()
 
 # Initialize database
 init_db()

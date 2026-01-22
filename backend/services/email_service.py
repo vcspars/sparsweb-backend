@@ -91,11 +91,19 @@ class EmailService:
                         print(f"Attachment file not found: {file_path}")
 
             # Send email
-            with smtplib.SMTP(self.smtp_host, self.smtp_port) as server:
-                if self.use_tls:
-                    server.starttls()
-                server.login(self.username, self.password)
-                server.send_message(msg)
+            # Use SSL for port 465, or STARTTLS for port 587
+            if self.smtp_port == 465:
+                # Use SSL connection for port 465 (required for Render and other cloud platforms)
+                with smtplib.SMTP_SSL(self.smtp_host, self.smtp_port) as server:
+                    server.login(self.username, self.password)
+                    server.send_message(msg)
+            else:
+                # Use STARTTLS for port 587 (for local development)
+                with smtplib.SMTP(self.smtp_host, self.smtp_port) as server:
+                    if self.use_tls:
+                        server.starttls()
+                    server.login(self.username, self.password)
+                    server.send_message(msg)
 
             return True
         except Exception as e:
