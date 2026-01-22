@@ -13,7 +13,12 @@ from pathlib import Path
 class EmailService:
     def __init__(self):
         self.smtp_host = os.getenv("EMAIL_HOST")
-        self.smtp_port = int(os.getenv("EMAIL_PORT"))
+        # Handle EMAIL_PORT with default fallback
+        email_port_str = os.getenv("EMAIL_PORT", "587")
+        try:
+            self.smtp_port = int(email_port_str)
+        except (ValueError, TypeError):
+            self.smtp_port = 587  # Default to 587 if invalid
         self.use_tls = os.getenv("EMAIL_USE_TLS", "True").lower() == "true"
         self.username = os.getenv("EMAIL_HOST_USER")
         # Remove spaces from password (Gmail app passwords should not have spaces)
@@ -21,6 +26,9 @@ class EmailService:
         self.password = password.replace(" ", "") if password else ""
         self.from_email = os.getenv("DEFAULT_FROM_EMAIL")
         self.admin_email = os.getenv("ADMIN_EMAIL")
+        
+        # Debug: Print configuration (without sensitive data)
+        print(f"Email Service Config: Host={self.smtp_host}, Port={self.smtp_port}, TLS={self.use_tls}, User={self.username}, From={self.from_email}")
 
     async def send_email(
         self,
@@ -92,18 +100,37 @@ class EmailService:
 
             # Send email
             # Use SSL for port 465, or STARTTLS for port 587
+            print(f"Attempting to connect to {self.smtp_host}:{self.smtp_port} (SSL: {self.smtp_port == 465})")
+            
             if self.smtp_port == 465:
                 # Use SSL connection for port 465 (required for Render and other cloud platforms)
-                with smtplib.SMTP_SSL(self.smtp_host, self.smtp_port) as server:
-                    server.login(self.username, self.password)
-                    server.send_message(msg)
+                print("Using SMTP_SSL for port 465")
+                try:
+                    with smtplib.SMTP_SSL(self.smtp_host, self.smtp_port, timeout=30) as server:
+                        print("Connected successfully, attempting login...")
+                        server.login(self.username, self.password)
+                        print("Login successful, sending message...")
+                        server.send_message(msg)
+                        print("Email sent successfully via SMTP_SSL")
+                except Exception as ssl_error:
+                    print(f"SMTP_SSL error: {str(ssl_error)}")
+                    raise
             else:
                 # Use STARTTLS for port 587 (for local development)
-                with smtplib.SMTP(self.smtp_host, self.smtp_port) as server:
-                    if self.use_tls:
-                        server.starttls()
-                    server.login(self.username, self.password)
-                    server.send_message(msg)
+                print(f"Using SMTP with STARTTLS for port {self.smtp_port}")
+                try:
+                    with smtplib.SMTP(self.smtp_host, self.smtp_port, timeout=30) as server:
+                        print("Connected successfully, starting TLS...")
+                        if self.use_tls:
+                            server.starttls()
+                        print("TLS started, attempting login...")
+                        server.login(self.username, self.password)
+                        print("Login successful, sending message...")
+                        server.send_message(msg)
+                        print("Email sent successfully via SMTP STARTTLS")
+                except Exception as tls_error:
+                    print(f"SMTP STARTTLS error: {str(tls_error)}")
+                    raise
 
             return True
         except Exception as e:

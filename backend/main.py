@@ -52,3 +52,24 @@ async def root():
 async def health_check():
     return {"status": "healthy", "timestamp": datetime.now().isoformat()}
 
+class TestEmailRequest(BaseModel):
+    to_email: str = "test@example.com"
+
+@app.post("/api/test-email")
+async def test_email(request: TestEmailRequest):
+    """Test endpoint to send a test email"""
+    try:
+        email_service = EmailService()
+        result = await email_service.send_email(
+            to_email=request.to_email,
+            subject="Test Email from SPARS Backend",
+            body="This is a test email to verify email functionality.",
+            html_body="<html><body><h1>Test Email</h1><p>This is a test email to verify email functionality.</p></body></html>"
+        )
+        if result:
+            return {"success": True, "message": f"Test email sent successfully to {request.to_email}"}
+        else:
+            return {"success": False, "message": "Failed to send test email. Check server logs."}
+    except Exception as e:
+        return {"success": False, "message": f"Error: {str(e)}"}
+
