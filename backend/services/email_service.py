@@ -344,9 +344,9 @@ www.sparsus.com
 info@sparsus.com
 """
         
-        elif "contact" in form_type_lower or "inquiry" in form_type_lower:
-            # Contact Us
-            subject = "Thank You for Contacting SPARS - We've Received Your Inquiry"
+        elif "sales" in form_type_lower:
+            # Talk to Sales - Check this BEFORE "contact" or "inquiry" to avoid matching "Sales Inquiry"
+            subject = "Thank You for Contacting SPARS Sales Team"
             html_body = f"""\
 <!DOCTYPE html>
 <html>
@@ -361,11 +361,11 @@ info@sparsus.com
     </p>
 
     <p>
-      We have received your inquiry submitted through our website. Our team will review it and get back to you shortly.
+      We have received your request to connect with our sales team. One of our representatives will get in touch with you shortly to discuss your requirements.
     </p>
 
     <p>
-      If you'd like a <strong>personalized demo</strong> or have any additional questions, feel free to reply to this email.
+      If you'd like a <strong>personalized demo</strong> or have any questions in the meantime, feel free to reply to this email.
     </p>
 
     <p style="margin-top:18px;margin-bottom:0;">
@@ -380,11 +380,12 @@ info@sparsus.com
 
 Thank you for your interest in SPARS – the Ultimate ERP Solution for the Home Furnishing Industry.
 
-We have received your inquiry submitted through our website. Our team will review it and get back to you shortly.
+We have received your request to connect with our sales team. One of our representatives will get in touch with you shortly to discuss your requirements.
 
-If you'd like a personalized demo or have any additional questions, feel free to reply to this email.
+If you'd like a personalized demo or have any questions in the meantime, feel free to reply to this email.
 
 Best regards,
+
 Team SPARS
 
 Magnum Opus System Corp. – USA
@@ -439,9 +440,9 @@ www.sparsus.com
 info@sparsus.com
 """
         
-        elif "sales" in form_type_lower:
-            # Talk to Sales
-            subject = "Thank You for Contacting SPARS Sales Team"
+        elif "contact" in form_type_lower or ("inquiry" in form_type_lower and "sales" not in form_type_lower):
+            # Contact Us
+            subject = "Thank You for Contacting SPARS - We've Received Your Inquiry"
             html_body = f"""\
 <!DOCTYPE html>
 <html>
@@ -456,11 +457,11 @@ info@sparsus.com
     </p>
 
     <p>
-      We have received your request to connect with our sales team. One of our representatives will get in touch with you shortly to discuss your requirements.
+      We have received your inquiry submitted through our website. Our team will review it and get back to you shortly.
     </p>
 
     <p>
-      If you'd like a <strong>personalized demo</strong> or have any questions in the meantime, feel free to reply to this email.
+      If you'd like a <strong>personalized demo</strong> or have any additional questions, feel free to reply to this email.
     </p>
 
     <p style="margin-top:18px;margin-bottom:0;">
@@ -475,12 +476,11 @@ info@sparsus.com
 
 Thank you for your interest in SPARS – the Ultimate ERP Solution for the Home Furnishing Industry.
 
-We have received your request to connect with our sales team. One of our representatives will get in touch with you shortly to discuss your requirements.
+We have received your inquiry submitted through our website. Our team will review it and get back to you shortly.
 
-If you'd like a personalized demo or have any questions in the meantime, feel free to reply to this email.
+If you'd like a personalized demo or have any additional questions, feel free to reply to this email.
 
 Best regards,
-
 Team SPARS
 
 Magnum Opus System Corp. – USA
