@@ -19,8 +19,8 @@ cp .env.example .env
    - OpenAI API key for chatbot functionality
 
 4. Add PDF files to `backend/pdfs/`:
-   - `brochure.pdf` - SPARS brochure PDF
-   - `product_profile.pdf` - Product profile PDF
+   - `SPARS_Brochure.pdf` - SPARS brochure PDF
+   - `SPARS_Profile.pdf` - Product profile PDF
 
 ## Running the Server
 
@@ -59,7 +59,7 @@ The backend is configured to accept requests from all origins. For production, y
 - All email sending is done asynchronously using background tasks
 - PDF attachments are sent via email when available
 - Chatbot uses OpenAI GPT-3.5-turbo with fallback responses if API key is not set
-- Make sure to add your PDF files (`brochure.pdf` and `product_profile.pdf`) to the `backend/pdfs/` directory
+- Make sure to add your PDF files (`SPARS_Brochure.pdf` and `SPARS_Profile.pdf`) to the `backend/pdfs/` directory
 
 ## Frontend Integration
 

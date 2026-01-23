@@ -81,6 +81,11 @@ class TalkToSalesForm(Base):
     phone = Column(String)
     company = Column(String, nullable=True)
     message = Column(Text)
+    current_system = Column(String, nullable=True)
+    warehouses = Column(Integer, nullable=True)
+    users = Column(Integer, nullable=True)
+    requirements = Column(Text, nullable=True)
+    timeline = Column(String, nullable=True)
     submitted_at = Column(DateTime, default=get_local_time)
 
 # Create tables

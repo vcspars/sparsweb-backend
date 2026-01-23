@@ -17,15 +17,13 @@ def find_pdf(filename_options):
     return None
 
 BROCHURE_PDF = find_pdf([
-    "brochure.pdf",
-    "brochure.pdf.pdf",
-    "SPARS-Product-Brochure.pdf",
-    "SPARS-Brochure.pdf"
+    "SPARS_Brochure.pdf",
+    "SPARS-Brochure.pdf",
+    "SPARS-Product-Brochure.pdf"
 ])
 
 PRODUCT_PROFILE_PDF = find_pdf([
-    "product_profile.pdf",
-    "product_profile.pdf.pdf",
+    "SPARS_Profile.pdf",
     "SPARS-Product-Profile.pdf",
     "SPARS-ProductProfile.pdf"
 ])

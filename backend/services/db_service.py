@@ -83,7 +83,12 @@ class DatabaseService:
             email=form_data.get("email"),
             phone=form_data.get("phone"),
             company=form_data.get("company"),
-            message=form_data.get("message")
+            message=form_data.get("message"),
+            current_system=form_data.get("current_system"),
+            warehouses=form_data.get("warehouses"),
+            users=form_data.get("users"),
+            requirements=form_data.get("requirements"),
+            timeline=form_data.get("timeline")
         )
         db.add(sales)
         db.commit()

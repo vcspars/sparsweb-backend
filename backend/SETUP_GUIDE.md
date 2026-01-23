@@ -34,8 +34,8 @@
    ```
 
 4. **Add PDF files:**
-   - Place `brochure.pdf` in `backend/pdfs/`
-   - Place `product_profile.pdf` in `backend/pdfs/`
+   - Place `SPARS_Brochure.pdf` in `backend/pdfs/`
+   - Place `SPARS_Profile.pdf` in `backend/pdfs/`
 
 5. **Run the server:**
    ```bash

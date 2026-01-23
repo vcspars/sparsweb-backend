@@ -48,15 +48,13 @@ BROCHURE_PDF = None
 PRODUCT_PROFILE_PDF = None
 
 possible_brochure_names = [
-    "brochure.pdf",
-    "brochure.pdf.pdf",  # Handle double extension
-    "SPARS-Product-Brochure.pdf",
-    "SPARS-Brochure.pdf"
+    "SPARS_Brochure.pdf",
+    "SPARS-Brochure.pdf",
+    "SPARS-Product-Brochure.pdf"
 ]
 
 possible_profile_names = [
-    "product_profile.pdf",
-    "product_profile.pdf.pdf",  # Handle double extension
+    "SPARS_Profile.pdf",
     "SPARS-Product-Profile.pdf",
     "SPARS-ProductProfile.pdf"
 ]
@@ -139,6 +137,11 @@ class TalkToSalesForm(BaseModel):
     phone: str
     company: Optional[str] = None
     message: str
+    current_system: Optional[str] = None
+    warehouses: Optional[int] = None
+    users: Optional[int] = None
+    requirements: Optional[str] = None
+    timeline: Optional[str] = None
 
 @router.post("/newsletter")
 async def subscribe_newsletter(
@@ -450,14 +453,28 @@ async def talk_to_sales(
             "email": form.email,
             "phone": form.phone,
             "company": form.company,
-            "message": form.message
+            "message": form.message,
+            "current_system": form.current_system,
+            "warehouses": form.warehouses,
+            "users": form.users,
+            "requirements": form.requirements,
+            "timeline": form.timeline
         }
         get_db_service().save_talk_to_sales_form(db, form_data)
         
         # Export to Excel in background
         background_tasks.add_task(get_excel_service().export_all_forms, db)
         
-        notification_data = {**form_data, "submitted_at": datetime.now().isoformat()}
+        # Prepare notification data with all fields
+        notification_data = {
+            **form_data,
+            "current_system": form.current_system or "",
+            "warehouses": str(form.warehouses) if form.warehouses else "",
+            "users": str(form.users) if form.users else "",
+            "requirements": form.requirements or "",
+            "timeline": form.timeline or "",
+            "submitted_at": datetime.now().isoformat()
+        }
         
         # Send notification to admin
         background_tasks.add_task(

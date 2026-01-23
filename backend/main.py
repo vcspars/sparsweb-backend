@@ -23,6 +23,44 @@ else:
 # Initialize database
 init_db()
 
+# Run migration for Talk to Sales form (adds new columns if they don't exist)
+def run_migration():
+    """Add new columns to talk_to_sales_forms table if they don't exist"""
+    import sqlite3
+    db_path = Path(__file__).parent / "spars_forms.db"
+    
+    if not db_path.exists():
+        return  # Database will be created with new schema
+    
+    try:
+        conn = sqlite3.connect(str(db_path))
+        cursor = conn.cursor()
+        
+        # Check if columns already exist
+        cursor.execute("PRAGMA table_info(talk_to_sales_forms)")
+        columns = [row[1] for row in cursor.fetchall()]
+        
+        # Add new columns if they don't exist
+        new_columns = {
+            "current_system": "TEXT",
+            "warehouses": "INTEGER",
+            "users": "INTEGER",
+            "requirements": "TEXT",
+            "timeline": "TEXT"
+        }
+        
+        for column_name, column_type in new_columns.items():
+            if column_name not in columns:
+                cursor.execute(f"ALTER TABLE talk_to_sales_forms ADD COLUMN {column_name} {column_type}")
+        
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Migration warning: {e}")
+
+# Run migration on startup
+run_migration()
+
 app = FastAPI(
     title="SPARS Backend API",
     description="Backend API for SPARS website forms and chatbot",

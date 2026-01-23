@@ -274,7 +274,6 @@ class EmailService:
         name: Optional[str] = None
     ) -> bool:
         """Send confirmation email to user"""
-        subject = f"Thank you for your {form_type} request - SPARS"
         logo_path = self._get_logo_path()
         logo_cid = None
         embedded_images = {}
@@ -284,37 +283,41 @@ class EmailService:
             embedded_images[logo_cid] = logo_path
         
         signature = self._get_signature_block(logo_cid)
+        
+        # Capitalize first letter of name (and each word for full names)
         user_name = name or "Valued Customer"
+        if user_name:
+            # Capitalize first letter of each word
+            user_name = " ".join(word.capitalize() for word in user_name.split())
         
-        # For Demo Request, don't include the "personalized demo" line since they already requested one
-        demo_line = ""
-        if form_type.lower() != "demo request":
-            demo_line = """    <p>
-      If you'd like a <strong>personalized demo</strong> or have any questions,
-      simply reply to this e-mail.
-    </p>
-
-"""
+        # Determine form type and set appropriate content
+        form_type_lower = form_type.lower()
         
-        html_body = f"""\
+        if "newsletter" in form_type_lower:
+            # Newsletter Subscription
+            subject = "Thank you for subscribing to SPARS Newsletter"
+            html_body = f"""\
 <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body style="font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20px;max-width:600px;margin:0 auto;">
-    <p>Dear {user_name},</p>
+    <p>Dear <strong>{user_name}</strong>,</p>
 
     <p>
-      Thank you for your interest in <strong>SPARS – Ultimate ERP Solution
-      for the Home Furnishing Industry</strong>.
+      Thank you for your interest in <strong>SPARS – the Ultimate ERP Solution for the Home Furnishing Industry</strong>.
     </p>
 
     <p>
-      We have received your {form_type} request and will get back to you shortly.
+      You have been successfully subscribed to our newsletter. You'll now receive updates, insights, and product news from SPARS.
     </p>
 
-{demo_line}    <p style="margin-top:18px;margin-bottom:0;">
+    <p>
+      If you'd like a <strong>personalized demo</strong> or have any questions, feel free to reply to this email—we'd be happy to assist you.
+    </p>
+
+    <p style="margin-top:18px;margin-bottom:0;">
       Best regards,<br><br><strong>Team&nbsp;SPARS</strong><br>
     </p>
 
@@ -322,18 +325,207 @@ class EmailService:
   </body>
 </html>
 """
-        
-        # For Demo Request, don't include the "personalized demo" line in text version
-        demo_text = ""
-        if form_type.lower() != "demo request":
-            demo_text = "\nIf you'd like a personalized demo or have any questions, simply reply to this e-mail.\n"
-        
-        text_body = f"""Dear {user_name},
+            text_body = f"""Dear {user_name},
 
-Thank you for your interest in SPARS – Ultimate ERP Solution for the Home Furnishing Industry.
+Thank you for your interest in SPARS – the Ultimate ERP Solution for the Home Furnishing Industry.
 
-We have received your {form_type} request and will get back to you shortly.{demo_text}
+You have been successfully subscribed to our newsletter. You'll now receive updates, insights, and product news from SPARS.
+
+If you'd like a personalized demo or have any questions, feel free to reply to this email—we'd be happy to assist you.
+
 Best regards,
+
+Team SPARS
+
+Magnum Opus System Corp. – USA
++1 (646) 775-2716
+www.sparsus.com
+112 West 34 St. 18th Floor, New York, NY 10120
+info@sparsus.com
+"""
+        
+        elif "contact" in form_type_lower or "inquiry" in form_type_lower:
+            # Contact Us
+            subject = "Thank You for Contacting SPARS - We've Received Your Inquiry"
+            html_body = f"""\
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20px;max-width:600px;margin:0 auto;">
+    <p>Dear <strong>{user_name}</strong>,</p>
+
+    <p>
+      Thank you for your interest in <strong>SPARS – the Ultimate ERP Solution for the Home Furnishing Industry</strong>.
+    </p>
+
+    <p>
+      We have received your inquiry submitted through our website. Our team will review it and get back to you shortly.
+    </p>
+
+    <p>
+      If you'd like a <strong>personalized demo</strong> or have any additional questions, feel free to reply to this email.
+    </p>
+
+    <p style="margin-top:18px;margin-bottom:0;">
+      Best regards,<br><br><strong>Team&nbsp;SPARS</strong><br>
+    </p>
+
+    {signature}
+  </body>
+</html>
+"""
+            text_body = f"""Dear {user_name},
+
+Thank you for your interest in SPARS – the Ultimate ERP Solution for the Home Furnishing Industry.
+
+We have received your inquiry submitted through our website. Our team will review it and get back to you shortly.
+
+If you'd like a personalized demo or have any additional questions, feel free to reply to this email.
+
+Best regards,
+Team SPARS
+
+Magnum Opus System Corp. – USA
++1 (646) 775-2716
+www.sparsus.com
+112 West 34 St. 18th Floor, New York, NY 10120
+info@sparsus.com
+"""
+        
+        elif "demo" in form_type_lower:
+            # Demo Request
+            subject = "Thank You for Requesting a Demo – SPARS"
+            html_body = f"""\
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20px;max-width:600px;margin:0 auto;">
+    <p>Dear <strong>{user_name}</strong>,</p>
+
+    <p>
+      Thank you for your interest in <strong>SPARS – the Ultimate ERP Solution for the Home Furnishing Industry</strong>.
+    </p>
+
+    <p>
+      We have received your demo request. Our team will contact you shortly to schedule the demo and share further details.
+    </p>
+
+    <p style="margin-top:18px;margin-bottom:0;">
+      Best regards,<br><br><strong>Team&nbsp;SPARS</strong><br>
+    </p>
+
+    {signature}
+  </body>
+</html>
+"""
+            text_body = f"""Dear {user_name},
+
+Thank you for your interest in SPARS – the Ultimate ERP Solution for the Home Furnishing Industry.
+
+We have received your demo request. Our team will contact you shortly to schedule the demo and share further details.
+
+Best regards,
+
+Team SPARS
+
+Magnum Opus System Corp. – USA
++1 (646) 775-2716
+www.sparsus.com
+112 West 34 St. 18th Floor, New York, NY 10120
+info@sparsus.com
+"""
+        
+        elif "sales" in form_type_lower:
+            # Talk to Sales
+            subject = "Thank You for Contacting SPARS Sales Team"
+            html_body = f"""\
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20px;max-width:600px;margin:0 auto;">
+    <p>Dear <strong>{user_name}</strong>,</p>
+
+    <p>
+      Thank you for your interest in <strong>SPARS – the Ultimate ERP Solution for the Home Furnishing Industry</strong>.
+    </p>
+
+    <p>
+      We have received your request to connect with our sales team. One of our representatives will get in touch with you shortly to discuss your requirements.
+    </p>
+
+    <p>
+      If you'd like a <strong>personalized demo</strong> or have any questions in the meantime, feel free to reply to this email.
+    </p>
+
+    <p style="margin-top:18px;margin-bottom:0;">
+      Best regards,<br><br><strong>Team&nbsp;SPARS</strong><br>
+    </p>
+
+    {signature}
+  </body>
+</html>
+"""
+            text_body = f"""Dear {user_name},
+
+Thank you for your interest in SPARS – the Ultimate ERP Solution for the Home Furnishing Industry.
+
+We have received your request to connect with our sales team. One of our representatives will get in touch with you shortly to discuss your requirements.
+
+If you'd like a personalized demo or have any questions in the meantime, feel free to reply to this email.
+
+Best regards,
+
+Team SPARS
+
+Magnum Opus System Corp. – USA
++1 (646) 775-2716
+www.sparsus.com
+112 West 34 St. 18th Floor, New York, NY 10120
+info@sparsus.com
+"""
+        
+        else:
+            # Default/fallback (shouldn't happen, but keeping for safety)
+            subject = f"Thank you for your {form_type} request - SPARS"
+            html_body = f"""\
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20px;max-width:600px;margin:0 auto;">
+    <p>Dear <strong>{user_name}</strong>,</p>
+
+    <p>
+      Thank you for your interest in <strong>SPARS – the Ultimate ERP Solution for the Home Furnishing Industry</strong>.
+    </p>
+
+    <p>
+      We have received your {form_type} request and will get back to you shortly.
+    </p>
+
+    <p style="margin-top:18px;margin-bottom:0;">
+      Best regards,<br><br><strong>Team&nbsp;SPARS</strong><br>
+    </p>
+
+    {signature}
+  </body>
+</html>
+"""
+            text_body = f"""Dear {user_name},
+
+Thank you for your interest in SPARS – the Ultimate ERP Solution for the Home Furnishing Industry.
+
+We have received your {form_type} request and will get back to you shortly.
+
+Best regards,
+
 Team SPARS
 
 Magnum Opus System Corp. – USA

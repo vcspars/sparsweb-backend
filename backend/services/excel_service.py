@@ -25,9 +25,10 @@ class ExcelService:
         # Remove default sheet
         wb.remove(wb.active)
         
-        # Export each form type to separate sheet
+        # Export each form type to separate sheet (6 forms total)
         self._export_newsletter(wb, db)
         self._export_contact_forms(wb, db)
+        self._export_demo_requests(wb, db)
         self._export_brochure_forms(wb, db)
         self._export_product_profile_forms(wb, db)
         self._export_talk_to_sales_forms(wb, db)
@@ -76,11 +77,12 @@ class ExcelService:
             ws.column_dimensions[column_letter].width = adjusted_width
 
     def _export_contact_forms(self, wb: Workbook, db: Session):
-        """Export contact forms"""
+        """Export contact forms (excluding demo requests)"""
         ws = wb.create_sheet("Contact Forms")
-        forms = db.query(ContactForm).order_by(ContactForm.submitted_at.desc()).all()
+        # Get contact forms where demo_date is None (not demo requests)
+        forms = db.query(ContactForm).filter(ContactForm.demo_date == None).order_by(ContactForm.submitted_at.desc()).all()
         
-        headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Message", "Demo Date", "Submitted At"]
+        headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Message", "Submitted At"]
         ws.append(headers)
         
         header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
@@ -99,7 +101,47 @@ class ExcelService:
                 form.phone or "",
                 form.company or "",
                 form.message or "",
+                form.submitted_at.strftime("%Y-%m-%d %H:%M:%S") if form.submitted_at else ""
+            ])
+        
+        for column in ws.columns:
+            max_length = 0
+            column_letter = column[0].column_letter
+            for cell in column:
+                try:
+                    if len(str(cell.value)) > max_length:
+                        max_length = len(str(cell.value))
+                except:
+                    pass
+            adjusted_width = min(max_length + 2, 50)
+            ws.column_dimensions[column_letter].width = adjusted_width
+
+    def _export_demo_requests(self, wb: Workbook, db: Session):
+        """Export demo request forms"""
+        ws = wb.create_sheet("Demo Requests")
+        # Get contact forms where demo_date is not None (demo requests)
+        forms = db.query(ContactForm).filter(ContactForm.demo_date != None).order_by(ContactForm.submitted_at.desc()).all()
+        
+        headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Preferred Demo Date", "Message", "Submitted At"]
+        ws.append(headers)
+        
+        header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
+        header_font = Font(bold=True, color="FFFFFF")
+        for cell in ws[1]:
+            cell.fill = header_fill
+            cell.font = header_font
+            cell.alignment = Alignment(horizontal="center")
+        
+        for form in forms:
+            ws.append([
+                form.id,
+                form.first_name or "",
+                form.last_name or "",
+                form.email,
+                form.phone or "",
+                form.company or "",
                 form.demo_date or "",
+                form.message or "",
                 form.submitted_at.strftime("%Y-%m-%d %H:%M:%S") if form.submitted_at else ""
             ])
         
@@ -211,7 +253,11 @@ class ExcelService:
         ws = wb.create_sheet("Talk to Sales")
         forms = db.query(TalkToSalesForm).order_by(TalkToSalesForm.submitted_at.desc()).all()
         
-        headers = ["ID", "Name", "Email", "Phone", "Company", "Message", "Submitted At"]
+        headers = [
+            "ID", "Name", "Email", "Phone", "Company", "Message",
+            "Current ERP System", "Number of Warehouses", "Expected Number of Users",
+            "Specific Requirements or Challenges", "Implementation Timeline", "Submitted At"
+        ]
         ws.append(headers)
         
         header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
@@ -229,6 +275,11 @@ class ExcelService:
                 form.phone,
                 form.company or "",
                 form.message,
+                form.current_system or "",
+                form.warehouses or "",
+                form.users or "",
+                form.requirements or "",
+                form.timeline or "",
                 form.submitted_at.strftime("%Y-%m-%d %H:%M:%S") if form.submitted_at else ""
             ])
         
