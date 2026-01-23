@@ -27,12 +27,13 @@ class ContactForm(Base):
     __tablename__ = "contact_forms"
     
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
     email = Column(String, index=True)
-    phone = Column(String, nullable=True)
-    company = Column(String, nullable=True)
-    inquiry_type = Column(String)
-    message = Column(Text)
+    phone = Column(String)
+    company = Column(String)
+    message = Column(Text, nullable=True)
+    demo_date = Column(String, nullable=True)
     submitted_at = Column(DateTime, default=get_local_time)
 
 class BrochureForm(Base):
@@ -80,21 +81,6 @@ class TalkToSalesForm(Base):
     phone = Column(String)
     company = Column(String, nullable=True)
     message = Column(Text)
-    submitted_at = Column(DateTime, default=get_local_time)
-
-class RequestDemoForm(Base):
-    __tablename__ = "request_demo_forms"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    first_name = Column(String)
-    last_name = Column(String)
-    email = Column(String, index=True)
-    phone = Column(String)
-    company_name = Column(String)
-    company_size = Column(String, nullable=True)
-    preferred_demo_date = Column(String)
-    preferred_demo_time = Column(String, nullable=True)
-    additional_information = Column(Text, nullable=True)
     submitted_at = Column(DateTime, default=get_local_time)
 
 # Create tables

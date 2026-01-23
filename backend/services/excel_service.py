@@ -80,7 +80,7 @@ class ExcelService:
         ws = wb.create_sheet("Contact Forms")
         forms = db.query(ContactForm).order_by(ContactForm.submitted_at.desc()).all()
         
-        headers = ["ID", "Name", "Email", "Phone", "Company", "Inquiry Type", "Message", "Submitted At"]
+        headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Message", "Demo Date", "Submitted At"]
         ws.append(headers)
         
         header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
@@ -93,12 +93,13 @@ class ExcelService:
         for form in forms:
             ws.append([
                 form.id,
-                form.name,
+                form.first_name or "",
+                form.last_name or "",
                 form.email,
                 form.phone or "",
                 form.company or "",
-                form.inquiry_type,
                 form.message or "",
+                form.demo_date or "",
                 form.submitted_at.strftime("%Y-%m-%d %H:%M:%S") if form.submitted_at else ""
             ])
         

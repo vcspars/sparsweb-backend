@@ -5,7 +5,17 @@ from typing import Optional, List, Dict
 from services.chatbot_service import ChatbotService
 
 router = APIRouter()
-chatbot_service = ChatbotService()
+
+# Lazy initialization - create service instance when first needed
+# This ensures .env is loaded before ChatbotService is instantiated
+_chatbot_service = None
+
+def get_chatbot_service():
+    """Get or create chatbot service instance"""
+    global _chatbot_service
+    if _chatbot_service is None:
+        _chatbot_service = ChatbotService()
+    return _chatbot_service
 
 class ChatMessage(BaseModel):
     message: str
@@ -25,6 +35,7 @@ async def chat_with_bot(chat_message: ChatMessage):
                 detail="Message cannot be empty"
             )
         
+        chatbot_service = get_chatbot_service()
         response = await chatbot_service.get_response(
             chat_message.message,
             chat_message.conversation_history

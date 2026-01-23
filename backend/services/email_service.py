@@ -98,6 +98,14 @@ class EmailService:
                     else:
                         print(f"Attachment file not found: {file_path}")
 
+            # Validate configuration before attempting connection
+            if not self.smtp_host:
+                raise ValueError("EMAIL_HOST is not set in environment variables")
+            if not self.username:
+                raise ValueError("EMAIL_HOST_USER is not set in environment variables")
+            if not self.password:
+                raise ValueError("EMAIL_HOST_PASSWORD is not set in environment variables")
+            
             # Send email
             # Use SSL for port 465, or STARTTLS for port 587
             print(f"Attempting to connect to {self.smtp_host}:{self.smtp_port} (SSL: {self.smtp_port == 465})")
@@ -106,30 +114,40 @@ class EmailService:
                 # Use SSL connection for port 465 (required for Render and other cloud platforms)
                 print("Using SMTP_SSL for port 465")
                 try:
-                    with smtplib.SMTP_SSL(self.smtp_host, self.smtp_port, timeout=30) as server:
-                        print("Connected successfully, attempting login...")
-                        server.login(self.username, self.password)
-                        print("Login successful, sending message...")
-                        server.send_message(msg)
-                        print("Email sent successfully via SMTP_SSL")
+                    server = smtplib.SMTP_SSL(self.smtp_host, self.smtp_port, timeout=30)
+                    print("Connected successfully, attempting login...")
+                    server.login(self.username, self.password)
+                    print("Login successful, sending message...")
+                    server.send_message(msg)
+                    server.quit()
+                    print("Email sent successfully via SMTP_SSL")
                 except Exception as ssl_error:
                     print(f"SMTP_SSL error: {str(ssl_error)}")
+                    try:
+                        server.quit()
+                    except:
+                        pass
                     raise
             else:
                 # Use STARTTLS for port 587 (for local development)
                 print(f"Using SMTP with STARTTLS for port {self.smtp_port}")
                 try:
-                    with smtplib.SMTP(self.smtp_host, self.smtp_port, timeout=30) as server:
-                        print("Connected successfully, starting TLS...")
-                        if self.use_tls:
-                            server.starttls()
-                        print("TLS started, attempting login...")
-                        server.login(self.username, self.password)
-                        print("Login successful, sending message...")
-                        server.send_message(msg)
-                        print("Email sent successfully via SMTP STARTTLS")
+                    server = smtplib.SMTP(self.smtp_host, self.smtp_port, timeout=30)
+                    print("Connected successfully, starting TLS...")
+                    if self.use_tls:
+                        server.starttls()
+                    print("TLS started, attempting login...")
+                    server.login(self.username, self.password)
+                    print("Login successful, sending message...")
+                    server.send_message(msg)
+                    server.quit()
+                    print("Email sent successfully via SMTP STARTTLS")
                 except Exception as tls_error:
                     print(f"SMTP STARTTLS error: {str(tls_error)}")
+                    try:
+                        server.quit()
+                    except:
+                        pass
                     raise
 
             return True
@@ -268,6 +286,16 @@ class EmailService:
         signature = self._get_signature_block(logo_cid)
         user_name = name or "Valued Customer"
         
+        # For Demo Request, don't include the "personalized demo" line since they already requested one
+        demo_line = ""
+        if form_type.lower() != "demo request":
+            demo_line = """    <p>
+      If you'd like a <strong>personalized demo</strong> or have any questions,
+      simply reply to this e-mail.
+    </p>
+
+"""
+        
         html_body = f"""\
 <!DOCTYPE html>
 <html>
@@ -286,12 +314,7 @@ class EmailService:
       We have received your {form_type} request and will get back to you shortly.
     </p>
 
-    <p>
-      If you'd like a <strong>personalized demo</strong> or have any questions,
-      simply reply to this e-mail.
-    </p>
-
-    <p style="margin-top:18px;margin-bottom:0;">
+{demo_line}    <p style="margin-top:18px;margin-bottom:0;">
       Best regards,<br><br><strong>Team&nbsp;SPARS</strong><br>
     </p>
 
@@ -300,14 +323,16 @@ class EmailService:
 </html>
 """
         
+        # For Demo Request, don't include the "personalized demo" line in text version
+        demo_text = ""
+        if form_type.lower() != "demo request":
+            demo_text = "\nIf you'd like a personalized demo or have any questions, simply reply to this e-mail.\n"
+        
         text_body = f"""Dear {user_name},
 
 Thank you for your interest in SPARS – Ultimate ERP Solution for the Home Furnishing Industry.
 
-We have received your {form_type} request and will get back to you shortly.
-
-If you'd like a personalized demo or have any questions, simply reply to this e-mail.
-
+We have received your {form_type} request and will get back to you shortly.{demo_text}
 Best regards,
 Team SPARS
 

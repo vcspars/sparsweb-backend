@@ -4,8 +4,7 @@ from database import (
     ContactForm,
     BrochureForm,
     ProductProfileForm,
-    TalkToSalesForm,
-    RequestDemoForm
+    TalkToSalesForm
 )
 
 class DatabaseService:
@@ -22,12 +21,13 @@ class DatabaseService:
     def save_contact_form(db: Session, form_data: dict):
         """Save contact form to database"""
         contact = ContactForm(
-            name=form_data.get("name"),
+            first_name=form_data.get("first_name"),
+            last_name=form_data.get("last_name"),
             email=form_data.get("email"),
             phone=form_data.get("phone"),
             company=form_data.get("company"),
-            inquiry_type=form_data.get("inquiry_type"),
-            message=form_data.get("message")
+            message=form_data.get("message"),
+            demo_date=form_data.get("demo_date")
         )
         db.add(contact)
         db.commit()
@@ -89,23 +89,4 @@ class DatabaseService:
         db.commit()
         db.refresh(sales)
         return sales
-
-    @staticmethod
-    def save_request_demo_form(db: Session, form_data: dict):
-        """Save request demo form to database"""
-        demo = RequestDemoForm(
-            first_name=form_data.get("first_name"),
-            last_name=form_data.get("last_name"),
-            email=form_data.get("email"),
-            phone=form_data.get("phone"),
-            company_name=form_data.get("company_name"),
-            company_size=form_data.get("company_size"),
-            preferred_demo_date=form_data.get("preferred_demo_date"),
-            preferred_demo_time=form_data.get("preferred_demo_time"),
-            additional_information=form_data.get("additional_information")
-        )
-        db.add(demo)
-        db.commit()
-        db.refresh(demo)
-        return demo
 
