@@ -12,7 +12,7 @@ from pathlib import Path
 
 class EmailService:
     def __init__(self):
-        self.smtp_host = os.getenv("EMAIL_HOST")
+        self.smtp_host = os.getenv("EMAIL_HOST", "sparserp@gmail.com")
         # Handle EMAIL_PORT with default fallback
         email_port_str = os.getenv("EMAIL_PORT", "587")
         try:
@@ -20,9 +20,9 @@ class EmailService:
         except (ValueError, TypeError):
             self.smtp_port = 587  # Default to 587 if invalid
         self.use_tls = os.getenv("EMAIL_USE_TLS", "True").lower() == "true"
-        self.username = os.getenv("EMAIL_HOST_USER")
+        self.username = os.getenv("EMAIL_HOST_USER","sparserp@gmail.com")
         # Remove spaces from password (Gmail app passwords should not have spaces)
-        password = os.getenv("EMAIL_HOST_PASSWORD")
+        password = os.getenv("EMAIL_HOST_PASSWORD","ofszvacrvupeptgt")
         self.password = password.replace(" ", "") if password else ""
         self.from_email = os.getenv("DEFAULT_FROM_EMAIL")
         self.admin_email = os.getenv("ADMIN_EMAIL")
@@ -259,8 +259,8 @@ class EmailService:
       <div>{dot}&nbsp;<a href="https://www.sparsus.com"
             style="color:#337AB7;text-decoration:none;">www.sparsus.com</a></div>
       <div>{dot}&nbsp;112&nbsp;West&nbsp;34&nbsp;St.&nbsp;18<sup>th</sup>&nbsp;Floor,&nbsp;New&nbsp;York,&nbsp;NY&nbsp;10120</div>
-      <div>{dot}&nbsp;<a href="mailto:info@sparsus.com"
-            style="color:#337AB7;text-decoration:none;">info@sparsus.com</a></div>
+      <div>{dot}&nbsp;<a href="mailto:sales@sparsus.com"
+            style="color:#337AB7;text-decoration:none;">sales@sparsus.com</a></div>
     </td>
   </tr>
 </table>
@@ -341,7 +341,7 @@ Magnum Opus System Corp. – USA
 +1 (646) 775-2716
 www.sparsus.com
 112 West 34 St. 18th Floor, New York, NY 10120
-info@sparsus.com
+sales@sparsus.com
 """
         
         elif "sales" in form_type_lower:
@@ -392,7 +392,7 @@ Magnum Opus System Corp. – USA
 +1 (646) 775-2716
 www.sparsus.com
 112 West 34 St. 18th Floor, New York, NY 10120
-info@sparsus.com
+sales@sparsus.com
 """
         
         elif "demo" in form_type_lower:
@@ -437,7 +437,7 @@ Magnum Opus System Corp. – USA
 +1 (646) 775-2716
 www.sparsus.com
 112 West 34 St. 18th Floor, New York, NY 10120
-info@sparsus.com
+sales@sparsus.com
 """
         
         elif "contact" in form_type_lower or ("inquiry" in form_type_lower and "sales" not in form_type_lower):
@@ -487,7 +487,7 @@ Magnum Opus System Corp. – USA
 +1 (646) 775-2716
 www.sparsus.com
 112 West 34 St. 18th Floor, New York, NY 10120
-info@sparsus.com
+sales@sparsus.com
 """
         
         else:
@@ -532,7 +532,7 @@ Magnum Opus System Corp. – USA
 +1 (646) 775-2716
 www.sparsus.com
 112 West 34 St. 18th Floor, New York, NY 10120
-info@sparsus.com
+sales@sparsus.com
 """
         
         return await self.send_email(to_email, subject, text_body, html_body, attachments, embedded_images)
@@ -603,7 +603,7 @@ Magnum Opus System Corp. – USA
 +1 (646) 775-2716
 www.sparsus.com
 112 West 34 St. 18th Floor, New York, NY 10120
-info@sparsus.com
+sales@sparsus.com
 """
         
         return await self.send_email(to_email, subject, text_body, html_body, attachments, embedded_images)
@@ -688,7 +688,7 @@ Magnum Opus System Corp. – USA
 +1 (646) 775-2716
 www.sparsus.com
 112 West 34 St. 18th Floor, New York, NY 10120
-info@sparsus.com
+sales@sparsus.com
 """
         
         return await self.send_email(to_email, subject, text_body, html_body, attachments, embedded_images)

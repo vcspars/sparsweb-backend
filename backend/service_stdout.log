@@ -1,0 +1,93 @@
+INFO:     127.0.0.1:62732 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62732 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62732 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62740 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     122.129.80.226:62749 - "GET / HTTP/1.1" 200 OK
+INFO:     157.55.39.223:40579 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     207.46.13.154:27076 - "GET / HTTP/1.1" 200 OK
+INFO:     204.76.203.93:37864 - "GET /ip HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63129 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63129 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     54.235.55.91:56448 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     54.235.55.91:36196 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     54.235.55.91:40574 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     54.235.55.91:35940 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     44.192.50.39:45380 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     195.3.222.78:33254 - "POST / HTTP/1.1" 405 Method Not Allowed
+INFO:     195.3.222.78:57380 - "POST /_next HTTP/1.1" 404 Not Found
+INFO:     195.3.222.78:56588 - "POST /api HTTP/1.1" 404 Not Found
+INFO:     44.222.65.242:42342 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     3.236.119.28:47340 - "GET /api/swagger.json HTTP/1.1" 404 Not Found
+Email Service Config: Host=smtp.gmail.com, Port=587, TLS=True, User=vcspars@gmail.com, From=vcspars@gmail.com
+INFO:     3.236.119.28:43572 - "POST /api/newsletter HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+INFO:     3.236.119.28:58898 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     3.236.119.28:59670 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     3.92.91.133:35008 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     18.207.101.212:35156 - "POST /api/newsletter HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+INFO:     127.0.0.1:63359 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63359 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+Email Service Config: Host=smtp.gmail.com, Port=587, TLS=True, User=sparserp@gmail.com, From=sparserp@gmail.com
+INFO:     3.237.33.67:38764 - "POST /api/newsletter HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+SMTP STARTTLS error: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-4804d3fda30sm27053475e9.1 - gsmtp')
+Error sending email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-4804d3fda30sm27053475e9.1 - gsmtp')
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+SMTP STARTTLS error: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-4804dbb6315sm24112375e9.4 - gsmtp')
+Error sending email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-4804dbb6315sm24112375e9.4 - gsmtp')
+INFO:     3.237.33.67:53996 - "POST /api/newsletter HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+SMTP STARTTLS error: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-4804d84ef51sm55983485e9.5 - gsmtp')
+Error sending email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-4804d84ef51sm55983485e9.5 - gsmtp')
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+SMTP STARTTLS error: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-435b1f745dbsm7571356f8f.34 - gsmtp')
+Error sending email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-435b1f745dbsm7571356f8f.34 - gsmtp')
