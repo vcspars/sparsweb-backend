@@ -223,16 +223,24 @@ async def submit_contact_form(
             "submitted_at": datetime.now().isoformat()
         }
         
-        # Send notification to admin
+        # Send admin and sales notifications concurrently, then user confirmation
+        email_service = get_email_service()
+        
+        async def send_admin_notification():
+            return await email_service.send_form_notification(f"Contact Inquiry - {form.inquiry_type}", notification_data)
+        
+        async def send_sales_notification():
+            return await email_service.send_contact_inquiry_sales_notification(notification_data)
+        
+        # Send admin and sales emails concurrently
         background_tasks.add_task(
-            get_email_service().send_form_notification,
-            f"Contact Inquiry - {form.inquiry_type}",
-            notification_data
+            email_service.send_emails_concurrent,
+            [send_admin_notification, send_sales_notification]
         )
         
         # Send confirmation to user
         background_tasks.add_task(
-            get_email_service().send_confirmation_email,
+            email_service.send_confirmation_email,
             form.email,
             "Contact Inquiry",
             None,
@@ -416,16 +424,24 @@ async def request_demo(
             "submitted_at": datetime.now().isoformat()
         }
         
-        # Send notification to admin
+        # Send admin and sales notifications concurrently, then user confirmation
+        email_service = get_email_service()
+        
+        async def send_admin_notification():
+            return await email_service.send_form_notification("Demo Request", notification_data)
+        
+        async def send_sales_notification():
+            return await email_service.send_demo_request_sales_notification(notification_data)
+        
+        # Send admin and sales emails concurrently
         background_tasks.add_task(
-            get_email_service().send_form_notification,
-            "Demo Request",
-            notification_data
+            email_service.send_emails_concurrent,
+            [send_admin_notification, send_sales_notification]
         )
         
         # Send confirmation to user
         background_tasks.add_task(
-            get_email_service().send_confirmation_email,
+            email_service.send_confirmation_email,
             form.email,
             "Demo Request",
             None,
@@ -476,16 +492,24 @@ async def talk_to_sales(
             "submitted_at": datetime.now().isoformat()
         }
         
-        # Send notification to admin
+        # Send admin and sales notifications concurrently, then user confirmation
+        email_service = get_email_service()
+        
+        async def send_admin_notification():
+            return await email_service.send_form_notification("Talk to Sales", notification_data)
+        
+        async def send_sales_notification():
+            return await email_service.send_talk_to_sales_notification(notification_data)
+        
+        # Send admin and sales emails concurrently
         background_tasks.add_task(
-            get_email_service().send_form_notification,
-            "Talk to Sales",
-            notification_data
+            email_service.send_emails_concurrent,
+            [send_admin_notification, send_sales_notification]
         )
         
         # Send confirmation to user
         background_tasks.add_task(
-            get_email_service().send_confirmation_email,
+            email_service.send_confirmation_email,
             form.email,
             "Sales Inquiry",
             None,

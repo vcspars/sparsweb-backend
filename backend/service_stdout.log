@@ -91,3 +91,220 @@ Connected successfully, starting TLS...
 TLS started, attempting login...
 SMTP STARTTLS error: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-435b1f745dbsm7571356f8f.34 - gsmtp')
 Error sending email: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-435b1f745dbsm7571356f8f.34 - gsmtp')
+INFO:     127.0.0.1:58588 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58588 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58651 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58651 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58651 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58651 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58651 - "GET / HTTP/1.1" 200 OK
+INFO:     100.53.53.38:53282 - "POST /api/chatbot HTTP/1.1" 200 OK
+Email Service Config: Host=smtp.gmail.com, Port=587, TLS=True, User=sparserp@gmail.com, From=sparserp@gmail.com
+INFO:     100.53.53.38:59954 - "POST /api/newsletter HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+INFO:     79.100.233.248:44475 - "GET / HTTP/1.0" 200 OK
+INFO:     34.228.233.113:57232 - "POST /api/request-demo HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+Connected successfully, starting TLS...
+TLS started, attempting login...
+TLS started, attempting login...
+Login successful, sending message...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+Email sent successfully via SMTP STARTTLS
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+INFO:     100.48.45.184:58066 - "POST /api/talk-to-sales HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+Connected successfully, starting TLS...
+TLS started, attempting login...
+TLS started, attempting login...
+Login successful, sending message...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+Email sent successfully via SMTP STARTTLS
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+INFO:     100.48.45.184:47006 - "POST /api/contact HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+Connected successfully, starting TLS...
+TLS started, attempting login...
+TLS started, attempting login...
+Login successful, sending message...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+Email sent successfully via SMTP STARTTLS
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+INFO:     147.185.132.225:58450 - "GET / HTTP/1.1" 200 OK
+INFO:     167.99.61.77:36988 - "GET / HTTP/1.1" 200 OK
+INFO:     167.99.61.77:36990 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     167.172.78.147:43744 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     167.172.78.147:37438 - "GET /.git/config HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:56160 - "GET / HTTP/1.1" 200 OK
+INFO:     204.76.203.18:60152 - "GET /bins/ HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:55822 - "GET /bin/ HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:40126 - "GET /backup/ HTTP/1.1" 404 Not Found
+INFO:     192.109.200.205:23262 - "GET / HTTP/1.1" 200 OK
+INFO:     192.109.200.205:23278 - "POST / HTTP/1.1" 405 Method Not Allowed
+INFO:     185.226.197.37:35817 - "GET / HTTP/1.1" 200 OK
+INFO:     185.226.197.37:41284 - "POST /mcp HTTP/1.1" 404 Not Found
+INFO:     185.226.197.37:41284 - "GET /sse HTTP/1.1" 404 Not Found
+INFO:     185.226.197.38:41673 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     65.49.20.66:53274 - "GET / HTTP/1.1" 200 OK
+INFO:     65.49.20.98:16981 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     65.49.20.106:23287 - "GET /?format=json HTTP/1.1" 200 OK
+INFO:     205.210.31.72:63694 - "GET / HTTP/1.1" 200 OK
+INFO:     3.143.33.63:49862 - "GET / HTTP/1.1" 200 OK
+INFO:     3.143.33.63:53924 - "GET / HTTP/1.1" 200 OK
+INFO:     34.228.15.152:51098 - "POST /api/newsletter HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+INFO:     66.132.153.143:13546 - "GET / HTTP/1.1" 200 OK
+INFO:     66.132.153.143:49892 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     66.132.153.143:50042 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     198.235.24.73:59694 - "GET / HTTP/1.1" 200 OK
+INFO:     13.57.254.179:39332 - "GET / HTTP/1.1" 200 OK
+INFO:     13.220.202.71:34860 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     167.94.146.63:19916 - "GET / HTTP/1.1" 200 OK
+INFO:     167.94.146.63:47748 - "GET / HTTP/1.1" 200 OK
+INFO:     167.94.146.63:47788 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     167.94.146.63:47914 - "GET /.well-known/security.txt HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:55734 - "GET / HTTP/1.1" 200 OK
+INFO:     204.76.203.18:34724 - "GET /bins/ HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:35204 - "GET /bin/ HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:47200 - "GET /backup/ HTTP/1.1" 404 Not Found
+INFO:     137.184.230.179:46890 - "GET / HTTP/1.1" 200 OK
+INFO:     137.184.230.179:46906 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     198.235.24.164:62502 - "GET / HTTP/1.1" 200 OK
+INFO:     165.154.227.26:36342 - "GET / HTTP/1.1" 200 OK
+INFO:     165.154.227.26:36354 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     165.154.227.26:36364 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     205.210.31.203:58450 - "GET / HTTP/1.1" 200 OK
+INFO:     40.67.177.206:56354 - "GET / HTTP/1.1" 200 OK
+INFO:     103.203.57.20:48590 - "GET / HTTP/1.1" 200 OK
+INFO:     204.76.203.18:55630 - "GET / HTTP/1.1" 200 OK
+INFO:     204.76.203.18:60344 - "GET /bins/ HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:51682 - "GET /bin/ HTTP/1.1" 404 Not Found
+INFO:     142.93.37.3:60284 - "GET / HTTP/1.1" 200 OK
+INFO:     142.93.37.3:34732 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:36272 - "GET /backup/ HTTP/1.1" 404 Not Found
+INFO:     198.235.24.158:61810 - "GET / HTTP/1.1" 200 OK
+INFO:     167.172.188.19:24539 - "GET / HTTP/1.0" 200 OK
+INFO:     137.184.140.118:48988 - "GET / HTTP/1.1" 200 OK
+INFO:     137.184.140.118:48996 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     205.210.31.232:59568 - "GET / HTTP/1.1" 200 OK
+INFO:     3.134.148.59:46140 - "GET / HTTP/1.1" 200 OK
+INFO:     3.134.148.59:51794 - "GET / HTTP/1.1" 200 OK
+INFO:     205.210.31.192:64718 - "GET /.well-known/security.txt HTTP/1.1" 404 Not Found
+INFO:     94.231.206.109:52003 - "GET / HTTP/1.1" 200 OK
+INFO:     94.231.206.108:59101 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     85.217.140.14:57744 - "GET / HTTP/1.1" 200 OK
+INFO:     64.62.197.2:6808 - "GET / HTTP/1.1" 200 OK
+INFO:     64.62.197.8:7739 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.197.3:37707 - "GET /?format=json HTTP/1.1" 200 OK
+INFO:     13.219.183.251:49176 - "POST /api/chatbot HTTP/1.1" 200 OK
+INFO:     167.94.138.58:56238 - "GET / HTTP/1.1" 200 OK
+INFO:     167.94.138.58:33318 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     167.94.138.58:5346 - "GET /sitemap.xml HTTP/1.1" 404 Not Found
+INFO:     170.64.237.227:35490 - "GET / HTTP/1.1" 200 OK
+INFO:     170.64.237.227:35504 - "POST / HTTP/1.1" 405 Method Not Allowed
+INFO:     205.210.31.195:59248 - "GET / HTTP/1.1" 200 OK
+INFO:     159.65.170.213:35404 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     159.65.170.213:35410 - "GET /.git/config HTTP/1.1" 404 Not Found
+INFO:     92.63.197.50:46416 - "GET / HTTP/1.1" 200 OK
+INFO:     44.210.239.90:34076 - "POST /api/contact HTTP/1.1" 200 OK
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+Connected successfully, starting TLS...
+TLS started, attempting login...
+TLS started, attempting login...
+Login successful, sending message...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+Email sent successfully via SMTP STARTTLS
+Embedded image: C:\Users\Administrator\Desktop\SPARS-only-backend\public\assets\spars-logo.png as spars_logo
+Attempting to connect to smtp.gmail.com:587 (SSL: False)
+Using SMTP with STARTTLS for port 587
+Connected successfully, starting TLS...
+TLS started, attempting login...
+Login successful, sending message...
+Email sent successfully via SMTP STARTTLS
+INFO:     91.230.168.253:37023 - "GET / HTTP/1.1" 200 OK
+INFO:     91.230.168.16:51031 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     45.194.92.199:51154 - "GET / HTTP/1.1" 200 OK
+INFO:     204.76.203.93:49208 - "GET /ip HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:35532 - "GET / HTTP/1.1" 200 OK
+INFO:     101.36.109.144:63990 - "GET /api/v2/heartbeat HTTP/1.1" 404 Not Found
+INFO:     101.36.109.144:64130 - "GET / HTTP/1.1" 200 OK
+INFO:     101.36.109.144:64636 - "GET / HTTP/1.1" 200 OK
+INFO:     101.36.109.144:64748 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:60826 - "GET /bins/ HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:57896 - "GET /bin/ HTTP/1.1" 404 Not Found
+INFO:     204.76.203.18:46546 - "GET /backup/ HTTP/1.1" 404 Not Found
+INFO:     143.198.44.9:52690 - "GET / HTTP/1.1" 200 OK
+INFO:     64.62.156.80:56586 - "GET / HTTP/1.1" 200 OK
+INFO:     64.62.156.83:12543 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.156.91:55891 - "GET /?format=json HTTP/1.1" 200 OK
+INFO:     164.92.111.14:41270 - "GET / HTTP/1.1" 200 OK
+INFO:     164.92.111.14:56158 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     198.235.24.122:61884 - "GET / HTTP/1.1" 200 OK
+INFO:     147.185.132.105:57838 - "GET / HTTP/1.1" 200 OK
+INFO:     178.128.46.66:51920 - "GET / HTTP/1.1" 200 OK
+INFO:     178.128.46.66:51924 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     204.76.203.93:37758 - "GET /ip HTTP/1.1" 404 Not Found
+INFO:     3.132.23.201:51956 - "GET / HTTP/1.1" 200 OK
+INFO:     3.132.23.201:36678 - "GET / HTTP/1.1" 200 OK

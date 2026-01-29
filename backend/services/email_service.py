@@ -2,13 +2,16 @@ import smtplib
 import os
 import base64
 import uuid
+import asyncio
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email.mime.image import MIMEImage
 from email import encoders
-from typing import Optional, List
+from typing import Optional, List, Callable
 from pathlib import Path
+from datetime import datetime
 
 class EmailService:
     def __init__(self):
@@ -692,4 +695,310 @@ sales@sparsus.com
 """
         
         return await self.send_email(to_email, subject, text_body, html_body, attachments, embedded_images)
+
+    def _format_datetime(self, dt_string: str) -> str:
+        """Format ISO datetime string to readable format"""
+        try:
+            dt = datetime.fromisoformat(dt_string.replace('Z', '+00:00'))
+            return dt.strftime("%Y-%m-%d %H:%M:%S")
+        except:
+            return dt_string
+
+    async def send_demo_request_sales_notification(self, form_data: dict) -> bool:
+        """Send demo request notification to sales team"""
+        sales_email = "sales@sparsus.com"
+        subject = "New Demo Request Received – SPARS Website Form Submission"
+        
+        # Format submission date/time
+        submitted_at = form_data.get("submitted_at", "")
+        if submitted_at:
+            submitted_at = self._format_datetime(submitted_at)
+        
+        # Build plain text email body with proper indentation
+        body = f"""Hello SPARS Sales Team,
+
+A new Demo Request has been submitted through the SPARS website.
+Please review the prospect's details below and arrange the demo accordingly.
+
+⏰ Demo Request Details
+    First Name: {form_data.get("first_name", "")}
+    Last Name: {form_data.get("last_name", "")}
+    Email Address: {form_data.get("email", "")}
+    Phone Number: {form_data.get("phone", "")}
+
+    Company Name: {form_data.get("company_name", "")}
+    Company Size: {form_data.get("company_size", "")}
+
+📅 Preferred Demo Schedule
+    Preferred Demo Date: {form_data.get("preferred_demo_date", "")}
+    Preferred Demo Time: {form_data.get("preferred_demo_time", "")}
+
+📄 Additional Information
+    {form_data.get("additional_information", "")}
+
+🕐 Submission Information
+    Date & Time: {submitted_at}
+    Source: Website - Request a Demo Form
+
+Please contact the prospect to confirm availability, align expectations, and schedule
+the demo session.
+If the demo is scheduled, kindly update the sales/demo tracker accordingly.
+
+Best regards,
+SPARS Website Notification System"""
+        
+        # Build HTML email body with proper formatting matching user email style
+        html_body = f"""\
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20px;max-width:600px;margin:0 auto;">
+    <p><strong>Hello SPARS Sales Team,</strong></p>
+
+    <p>
+      A new <strong>Demo Request</strong> has been submitted through the SPARS website.<br>
+      Please review the prospect's details below and arrange the demo accordingly.
+    </p>
+
+    <p>
+      <strong>⏰ Demo Request Details</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>First Name:</strong> {form_data.get("first_name", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Last Name:</strong> {form_data.get("last_name", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Email Address:</strong> {form_data.get("email", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Phone Number:</strong> {form_data.get("phone", "")}<br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Company Name:</strong> {form_data.get("company_name", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Company Size:</strong> {form_data.get("company_size", "")}
+    </p>
+
+    <p>
+      <strong>📅 Preferred Demo Schedule</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Preferred Demo Date:</strong> {form_data.get("preferred_demo_date", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Preferred Demo Time:</strong> {form_data.get("preferred_demo_time", "")}
+    </p>
+
+    <p>
+      <strong>📄 Additional Information</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;{form_data.get("additional_information", "")}
+    </p>
+
+    <p>
+      <strong>🕐 Submission Information</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Date & Time:</strong> {submitted_at}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Source:</strong> Website - Request a Demo Form
+    </p>
+
+    <p>
+      Please contact the prospect to confirm availability, align expectations, and schedule<br>
+      the demo session.<br>
+      If the demo is scheduled, kindly update the sales/demo tracker accordingly.
+    </p>
+
+    <p style="margin-top:18px;margin-bottom:0;">
+      Best regards,<br><br><strong>SPARS Website Notification System</strong><br>
+    </p>
+  </body>
+</html>"""
+        
+        return await self.send_email(sales_email, subject, body, html_body, None, {})
+
+    async def send_contact_inquiry_sales_notification(self, form_data: dict) -> bool:
+        """Send contact inquiry notification to sales team"""
+        sales_email = "sales@sparsus.com"
+        subject = "New General Inquiry Received – SPARS Website Form Submission"
+        
+        # Format submission date/time
+        submitted_at = form_data.get("submitted_at", "")
+        if submitted_at:
+            submitted_at = self._format_datetime(submitted_at)
+        
+        # Build plain text email body with proper indentation
+        body = f"""Hello SPARS Sales Team,
+
+A new inquiry has been submitted through the 'General Inquiry Form' on the SPARS website.
+Please review the details below and take the necessary action.
+
+📄 Inquiry Details
+    Full Name: {form_data.get("name", "")}
+    Email: {form_data.get("email", "")}
+    Phone: {form_data.get("phone", "")}
+    Company Name: {form_data.get("company", "")}
+    Inquiry Type: {form_data.get("inquiry_type", "")}
+    Message / Details Provided by User: {form_data.get("message", "")}
+
+⏰ Submission Information
+    Date & Time: {submitted_at}
+    Source: Website – General Inquiry Form
+
+Please assess the inquiry and route it to the relevant team (Sales, Support, Operations, or Management) for appropriate follow-up.
+If this inquiry is already being handled, kindly update the internal tracker accordingly.
+
+Best regards,
+SPARS Website Notification System"""
+        
+        # Build HTML email body with proper formatting matching user email style
+        html_body = f"""\
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20px;max-width:600px;margin:0 auto;">
+    <p><strong>Hello SPARS Sales Team,</strong></p>
+
+    <p>
+      A new inquiry has been submitted through the '<strong>General Inquiry Form</strong>' on the SPARS website.<br>
+      Please review the details below and take the necessary action.
+    </p>
+
+    <p>
+      <strong>📄 Inquiry Details</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Full Name:</strong> {form_data.get("name", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Email:</strong> {form_data.get("email", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Phone:</strong> {form_data.get("phone", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Company Name:</strong> {form_data.get("company", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Inquiry Type:</strong> {form_data.get("inquiry_type", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Message / Details Provided by User:</strong> {form_data.get("message", "")}
+    </p>
+
+    <p>
+      <strong>⏰ Submission Information</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Date & Time:</strong> {submitted_at}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Source:</strong> Website – General Inquiry Form
+    </p>
+
+    <p>
+      Please assess the inquiry and route it to the relevant team (Sales, Support, Operations, or Management) for appropriate follow-up.<br>
+      If this inquiry is already being handled, kindly update the internal tracker accordingly.
+    </p>
+
+    <p style="margin-top:18px;margin-bottom:0;">
+      Best regards,<br><br><strong>SPARS Website Notification System</strong><br>
+    </p>
+  </body>
+</html>"""
+        
+        return await self.send_email(sales_email, subject, body, html_body, None, {})
+
+    async def send_talk_to_sales_notification(self, form_data: dict) -> bool:
+        """Send talk to sales notification to sales team"""
+        sales_email = "sales@sparsus.com"
+        subject = "New Lead Received – Talk To Sales Form Submission"
+        
+        # Format submission date/time
+        submitted_at = form_data.get("submitted_at", "")
+        if submitted_at:
+            submitted_at = self._format_datetime(submitted_at)
+        
+        # Build plain text email body with proper indentation
+        body = f"""Hello Sales Team,
+
+A new inquiry has been submitted through the 'Talk To Sales' form on the SPARS website. Please find the lead details below and follow up at the earliest.
+
+▲ Lead Details
+    Contact Information:
+    Name: {form_data.get("name", "")}
+    Email Address: {form_data.get("email", "")}
+    Contact Number: {form_data.get("phone", "")}
+    Company Name: {form_data.get("company", "")}
+    Message: {form_data.get("message", "")}
+
+    Requirements:
+    Current ERP System (if any): {form_data.get("current_system", "")}
+    Number of Warehouses: {form_data.get("warehouses", "")}
+    Expected Number of Users: {form_data.get("users", "")}
+    Specific Requirements or Challenges: {form_data.get("requirements", "")}
+    Implementation Time Line: {form_data.get("timeline", "")}
+
+ⓘ Submission Details
+    Date & Time: {submitted_at}
+    Source: Website - Talk To Sales Form
+
+Please review the information and reach out to the prospect for further discussion, demo scheduling, or requirement analysis.
+If this lead is already in progress, kindly update the sales tracker accordingly.
+
+Best regards,
+SPARS Website Notification System"""
+        
+        # Build HTML email body with proper formatting matching user email style
+        html_body = f"""\
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family:Arial,sans-serif;line-height:1.6;color:#333;margin:0;padding:20px;max-width:600px;margin:0 auto;">
+    <p><strong>Hello Sales Team,</strong></p>
+
+    <p>
+      A new inquiry has been submitted through the '<strong>Talk To Sales</strong>' form on the SPARS website. Please find the lead details below and follow up at the earliest.
+    </p>
+
+    <p>
+      <strong>▲ Lead Details</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Contact Information:</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Name:</strong> {form_data.get("name", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Email Address:</strong> {form_data.get("email", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Contact Number:</strong> {form_data.get("phone", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Company Name:</strong> {form_data.get("company", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Message:</strong> {form_data.get("message", "")}<br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Requirements:</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Current ERP System (if any):</strong> {form_data.get("current_system", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Number of Warehouses:</strong> {form_data.get("warehouses", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Expected Number of Users:</strong> {form_data.get("users", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Specific Requirements or Challenges:</strong> {form_data.get("requirements", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Implementation Time Line:</strong> {form_data.get("timeline", "")}
+    </p>
+
+    <p>
+      <strong>ⓘ Submission Details</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Date & Time:</strong> {submitted_at}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Source:</strong> Website - Talk To Sales Form
+    </p>
+
+    <p>
+      Please review the information and reach out to the prospect for further discussion, demo scheduling, or requirement analysis.<br>
+      If this lead is already in progress, kindly update the sales tracker accordingly.
+    </p>
+
+    <p style="margin-top:18px;margin-bottom:0;">
+      Best regards,<br><br><strong>SPARS Website Notification System</strong><br>
+    </p>
+  </body>
+</html>"""
+        
+        return await self.send_email(sales_email, subject, body, html_body, None, {})
+
+    def send_emails_concurrent(self, email_tasks: List[Callable]) -> List[bool]:
+        """Send multiple emails concurrently using ThreadPoolExecutor"""
+        def run_async_email(email_func):
+            """Helper to run async email function in thread"""
+            try:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                result = loop.run_until_complete(email_func())
+                loop.close()
+                return result
+            except Exception as e:
+                print(f"Error in concurrent email sending: {str(e)}")
+                return False
+        
+        results = []
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            # Submit all email tasks
+            future_to_task = {executor.submit(run_async_email, task): task for task in email_tasks}
+            
+            # Collect results as they complete
+            for future in as_completed(future_to_task):
+                try:
+                    result = future.result()
+                    results.append(result)
+                except Exception as e:
+                    print(f"Email task failed: {str(e)}")
+                    results.append(False)
+        
+        return results
 
