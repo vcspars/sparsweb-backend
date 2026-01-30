@@ -79,10 +79,12 @@ class NewsletterSubscription(BaseModel):
 
 # General Contact/Inquiry Model
 class ContactForm(BaseModel):
-    name: str
+    first_name: str
+    last_name: str
     email: EmailStr
     phone: Optional[str] = None
     company: Optional[str] = None
+    company_size: Optional[str] = None
     inquiry_type: str
     message: str
 
@@ -97,10 +99,16 @@ class DemoRequestForm(BaseModel):
     preferred_demo_date: str
     preferred_demo_time: Optional[str] = None
     additional_information: Optional[str] = None
+    current_system: Optional[str] = None
+    warehouses: Optional[int] = None
+    users: Optional[int] = None
+    requirements: Optional[str] = None
+    timeline: Optional[str] = None
 
 # Brochure Request Model
 class BrochureForm(BaseModel):
-    full_name: str
+    first_name: str
+    last_name: str
     email: EmailStr
     company: str
     phone: Optional[str] = None
@@ -132,11 +140,13 @@ class ProductProfileForm(BaseModel):
 
 # Talk to Sales Model
 class TalkToSalesForm(BaseModel):
-    name: str
+    first_name: str
+    last_name: str
     email: EmailStr
     phone: str
     company: Optional[str] = None
-    message: str
+    company_size: Optional[str] = None
+    additional_information: Optional[str] = None
     current_system: Optional[str] = None
     warehouses: Optional[int] = None
     users: Optional[int] = None
@@ -193,18 +203,14 @@ async def submit_contact_form(
 ):
     """Submit general contact/inquiry form"""
     try:
-        # Split name into first and last for database storage
-        name_parts = form.name.strip().split(" ", 1)
-        first_name = name_parts[0] if name_parts else form.name
-        last_name = name_parts[1] if len(name_parts) > 1 else ""
-        
         # Save to database
         form_data = {
-            "first_name": first_name,
-            "last_name": last_name,
+            "first_name": form.first_name,
+            "last_name": form.last_name,
             "email": form.email,
             "phone": form.phone or "",
             "company": form.company or "",
+            "company_size": form.company_size or "",
             "message": form.message,
             "demo_date": None
         }
@@ -214,10 +220,12 @@ async def submit_contact_form(
         background_tasks.add_task(get_excel_service().export_all_forms, db)
         
         notification_data = {
-            "name": form.name,
+            "first_name": form.first_name,
+            "last_name": form.last_name,
             "email": form.email,
             "phone": form.phone or "",
             "company": form.company or "",
+            "company_size": form.company_size or "",
             "inquiry_type": form.inquiry_type,
             "message": form.message,
             "submitted_at": datetime.now().isoformat()
@@ -244,7 +252,7 @@ async def submit_contact_form(
             form.email,
             "Contact Inquiry",
             None,
-            form.name
+            f"{form.first_name} {form.last_name}"
         )
         
         return {
@@ -270,7 +278,8 @@ async def request_brochure(
         
         # Save to database
         form_data = {
-            "full_name": form.full_name,
+            "first_name": form.first_name,
+            "last_name": form.last_name,
             "email": form.email,
             "company": form.company,
             "phone": form.phone,
@@ -303,7 +312,7 @@ async def request_brochure(
         background_tasks.add_task(
             get_email_service().send_brochure_email,
             form.email,
-            form.full_name,
+            f"{form.first_name} {form.last_name}",
             attachments if attachments else None
         )
         
@@ -403,8 +412,14 @@ async def request_demo(
             "email": form.email,
             "phone": form.phone,
             "company": form.company_name,
+            "company_size": form.company_size or "",
             "message": form.additional_information or "",
-            "demo_date": form.preferred_demo_date
+            "demo_date": form.preferred_demo_date,
+            "current_system": form.current_system,
+            "warehouses": form.warehouses,
+            "users": form.users,
+            "requirements": form.requirements,
+            "timeline": form.timeline
         }
         get_db_service().save_contact_form(db, form_data)
         
@@ -417,10 +432,16 @@ async def request_demo(
             "email": form.email,
             "phone": form.phone,
             "company_name": form.company_name,
+            "company": form.company_name,
             "company_size": form.company_size or "",
             "preferred_demo_date": form.preferred_demo_date,
             "preferred_demo_time": form.preferred_demo_time or "",
             "additional_information": form.additional_information or "",
+            "current_system": form.current_system or "",
+            "warehouses": str(form.warehouses) if form.warehouses else "",
+            "users": str(form.users) if form.users else "",
+            "requirements": form.requirements or "",
+            "timeline": form.timeline or "",
             "submitted_at": datetime.now().isoformat()
         }
         
@@ -465,11 +486,13 @@ async def talk_to_sales(
     try:
         # Save to database
         form_data = {
-            "name": form.name,
+            "first_name": form.first_name,
+            "last_name": form.last_name,
             "email": form.email,
             "phone": form.phone,
             "company": form.company,
-            "message": form.message,
+            "company_size": form.company_size,
+            "additional_information": form.additional_information or "",
             "current_system": form.current_system,
             "warehouses": form.warehouses,
             "users": form.users,
@@ -483,7 +506,13 @@ async def talk_to_sales(
         
         # Prepare notification data with all fields
         notification_data = {
-            **form_data,
+            "first_name": form.first_name,
+            "last_name": form.last_name,
+            "email": form.email,
+            "phone": form.phone,
+            "company": form.company or "",
+            "company_size": form.company_size or "",
+            "additional_information": form.additional_information,
             "current_system": form.current_system or "",
             "warehouses": str(form.warehouses) if form.warehouses else "",
             "users": str(form.users) if form.users else "",
@@ -513,7 +542,7 @@ async def talk_to_sales(
             form.email,
             "Sales Inquiry",
             None,
-            form.name
+            f"{form.first_name} {form.last_name}"
         )
         
         return {

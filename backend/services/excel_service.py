@@ -82,7 +82,7 @@ class ExcelService:
         # Get contact forms where demo_date is None (not demo requests)
         forms = db.query(ContactForm).filter(ContactForm.demo_date == None).order_by(ContactForm.submitted_at.desc()).all()
         
-        headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Message", "Submitted At"]
+        headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Company Size", "Message", "Submitted At"]
         ws.append(headers)
         
         header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
@@ -100,6 +100,7 @@ class ExcelService:
                 form.email,
                 form.phone or "",
                 form.company or "",
+                form.company_size or "",
                 form.message or "",
                 form.submitted_at.strftime("%Y-%m-%d %H:%M:%S") if form.submitted_at else ""
             ])
@@ -122,7 +123,7 @@ class ExcelService:
         # Get contact forms where demo_date is not None (demo requests)
         forms = db.query(ContactForm).filter(ContactForm.demo_date != None).order_by(ContactForm.submitted_at.desc()).all()
         
-        headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Preferred Demo Date", "Message", "Submitted At"]
+        headers = ["ID", "First Name", "Last Name", "Email", "Phone", "Company", "Company Size", "Preferred Demo Date", "Additional Information", "Current ERP System", "Number of Warehouses", "Expected Number of Users", "Specific Requirements or Challenges", "Implementation Timeline", "Submitted At"]
         ws.append(headers)
         
         header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
@@ -140,8 +141,14 @@ class ExcelService:
                 form.email,
                 form.phone or "",
                 form.company or "",
+                form.company_size or "",
                 form.demo_date or "",
                 form.message or "",
+                form.current_system or "",
+                form.warehouses or "",
+                form.users or "",
+                form.requirements or "",
+                form.timeline or "",
                 form.submitted_at.strftime("%Y-%m-%d %H:%M:%S") if form.submitted_at else ""
             ])
         
@@ -162,7 +169,7 @@ class ExcelService:
         ws = wb.create_sheet("Brochure Requests")
         forms = db.query(BrochureForm).order_by(BrochureForm.submitted_at.desc()).all()
         
-        headers = ["ID", "Full Name", "Email", "Company", "Phone", "Job Role", "Agreed to Marketing", "Submitted At"]
+        headers = ["ID", "First Name", "Last Name", "Email", "Company", "Phone", "Job Role", "Agreed to Marketing", "Submitted At"]
         ws.append(headers)
         
         header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
@@ -175,7 +182,8 @@ class ExcelService:
         for form in forms:
             ws.append([
                 form.id,
-                form.full_name,
+                form.first_name or "",
+                form.last_name or "",
                 form.email,
                 form.company,
                 form.phone or "",
@@ -254,7 +262,7 @@ class ExcelService:
         forms = db.query(TalkToSalesForm).order_by(TalkToSalesForm.submitted_at.desc()).all()
         
         headers = [
-            "ID", "Name", "Email", "Phone", "Company", "Message",
+            "ID", "First Name", "Last Name", "Email", "Phone", "Company", "Company Size", "Additional Information",
             "Current ERP System", "Number of Warehouses", "Expected Number of Users",
             "Specific Requirements or Challenges", "Implementation Timeline", "Submitted At"
         ]
@@ -270,11 +278,13 @@ class ExcelService:
         for form in forms:
             ws.append([
                 form.id,
-                form.name,
+                form.first_name or "",
+                form.last_name or "",
                 form.email,
                 form.phone,
                 form.company or "",
-                form.message,
+                form.company_size or "",
+                form.additional_information or "",
                 form.current_system or "",
                 form.warehouses or "",
                 form.users or "",

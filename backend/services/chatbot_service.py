@@ -274,7 +274,7 @@ SPARS stands for Smart Program for Area Rugs System. It is a specialized ERP sof
 - Phone: +1 (212) 685-2127 (Note: Some materials mention +1 (646) 775-2716 - use the most current number)
 - Address: 112 West 34 Street, 18th Floor, New York, NY 10120
 - Website: www.sparsus.com
-- Business Hours: Monday-Friday, 9:00 AM - 6:00 PM EST
+- Business Hours: Monday-Friday, 9:00 AM - 6:00 PM (ET – New York)
 
 ## YOUR RESPONSE GUIDELINES
 1. Be friendly, professional, and helpful
@@ -341,7 +341,7 @@ Always Return result markdown format- only return markdown data without ``` or m
             return "SPARS offers comprehensive ERP solutions including inventory management, order processing, warehouse automation, EDI integration, financial management, and more. Visit our Features and Modules pages for detailed information, or contact us for a personalized overview."
         
         elif any(word in message_lower for word in ["contact", "email", "phone", "reach"]):
-            return "You can reach us at:\n📧 Email: sales@sparsus.com\n📞 Phone: +1 (212) 685-2127\n📍 Address: 112 West 34 Street Floor 18, New York, NY 10120\n\nOur business hours are Monday-Friday, 9:00 AM - 6:00 PM EST."
+            return "You can reach us at:\n📧 Email: sales@sparsus.com\n📞 Phone: +1 (212) 685-2127\n📍 Address: 112 West 34 Street Floor 18, New York, NY 10120\n\nOur business hours are Monday-Friday, 9:00 AM - 6:00 PM (ET – New York)."
         
         elif any(word in message_lower for word in ["hello", "hi", "hey", "greetings"]):
             return "Hello! I'm the SPARS AI Assistant. How can I help you today? I can answer questions about our ERP solution, features, modules, pricing, or help you get in touch with our sales team."

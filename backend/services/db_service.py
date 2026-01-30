@@ -26,8 +26,14 @@ class DatabaseService:
             email=form_data.get("email"),
             phone=form_data.get("phone"),
             company=form_data.get("company"),
+            company_size=form_data.get("company_size"),
             message=form_data.get("message"),
-            demo_date=form_data.get("demo_date")
+            demo_date=form_data.get("demo_date"),
+            current_system=form_data.get("current_system"),
+            warehouses=form_data.get("warehouses"),
+            users=form_data.get("users"),
+            requirements=form_data.get("requirements"),
+            timeline=form_data.get("timeline")
         )
         db.add(contact)
         db.commit()
@@ -38,7 +44,8 @@ class DatabaseService:
     def save_brochure_form(db: Session, form_data: dict):
         """Save brochure form to database"""
         brochure = BrochureForm(
-            full_name=form_data.get("full_name"),
+            first_name=form_data.get("first_name"),
+            last_name=form_data.get("last_name"),
             email=form_data.get("email"),
             company=form_data.get("company"),
             phone=form_data.get("phone"),
@@ -79,11 +86,13 @@ class DatabaseService:
     def save_talk_to_sales_form(db: Session, form_data: dict):
         """Save talk to sales form to database"""
         sales = TalkToSalesForm(
-            name=form_data.get("name"),
+            first_name=form_data.get("first_name"),
+            last_name=form_data.get("last_name"),
             email=form_data.get("email"),
             phone=form_data.get("phone"),
             company=form_data.get("company"),
-            message=form_data.get("message"),
+            company_size=form_data.get("company_size"),
+            additional_information=form_data.get("additional_information"),
             current_system=form_data.get("current_system"),
             warehouses=form_data.get("warehouses"),
             users=form_data.get("users"),

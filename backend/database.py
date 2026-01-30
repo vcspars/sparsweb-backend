@@ -32,15 +32,23 @@ class ContactForm(Base):
     email = Column(String, index=True)
     phone = Column(String)
     company = Column(String)
+    company_size = Column(String, nullable=True)
     message = Column(Text, nullable=True)
     demo_date = Column(String, nullable=True)
+    # Demo request requirement fields
+    current_system = Column(String, nullable=True)
+    warehouses = Column(Integer, nullable=True)
+    users = Column(Integer, nullable=True)
+    requirements = Column(Text, nullable=True)
+    timeline = Column(String, nullable=True)
     submitted_at = Column(DateTime, default=get_local_time)
 
 class BrochureForm(Base):
     __tablename__ = "brochure_forms"
     
     id = Column(Integer, primary_key=True, index=True)
-    full_name = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
     email = Column(String, index=True)
     company = Column(String)
     phone = Column(String, nullable=True)
@@ -76,11 +84,13 @@ class TalkToSalesForm(Base):
     __tablename__ = "talk_to_sales_forms"
     
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
     email = Column(String, index=True)
     phone = Column(String)
     company = Column(String, nullable=True)
-    message = Column(Text)
+    company_size = Column(String, nullable=True)
+    additional_information = Column(Text)
     current_system = Column(String, nullable=True)
     warehouses = Column(Integer, nullable=True)
     users = Column(Integer, nullable=True)

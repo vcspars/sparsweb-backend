@@ -16,3 +16,4 @@ print(f"EMAIL_HOST_PASSWORD: {'SET' if os.getenv('EMAIL_HOST_PASSWORD') else 'NO
 print(f"DEFAULT_FROM_EMAIL: {os.getenv('DEFAULT_FROM_EMAIL')}")
 print(f"ADMIN_EMAIL: {os.getenv('ADMIN_EMAIL')}")
 
+

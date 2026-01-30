@@ -736,6 +736,13 @@ Please review the prospect's details below and arrange the demo accordingly.
 📄 Additional Information
     {form_data.get("additional_information", "")}
 
+📋 Requirements
+    Current ERP System (if any): {form_data.get("current_system", "")}
+    Number of Warehouses: {form_data.get("warehouses", "")}
+    Expected Number of Users: {form_data.get("users", "")}
+    Specific Requirements or Challenges: {form_data.get("requirements", "")}
+    Implementation Timeline: {form_data.get("timeline", "")}
+
 🕐 Submission Information
     Date & Time: {submitted_at}
     Source: Website - Request a Demo Form
@@ -785,6 +792,15 @@ SPARS Website Notification System"""
     </p>
 
     <p>
+      <strong>📋 Requirements</strong><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Current ERP System (if any):</strong> {form_data.get("current_system", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Number of Warehouses:</strong> {form_data.get("warehouses", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Expected Number of Users:</strong> {form_data.get("users", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Specific Requirements or Challenges:</strong> {form_data.get("requirements", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Implementation Timeline:</strong> {form_data.get("timeline", "")}
+    </p>
+
+    <p>
       <strong>🕐 Submission Information</strong><br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Date & Time:</strong> {submitted_at}<br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Source:</strong> Website - Request a Demo Form
@@ -821,10 +837,12 @@ A new inquiry has been submitted through the 'General Inquiry Form' on the SPARS
 Please review the details below and take the necessary action.
 
 📄 Inquiry Details
-    Full Name: {form_data.get("name", "")}
+    First Name: {form_data.get("first_name", "")}
+    Last Name: {form_data.get("last_name", "")}
     Email: {form_data.get("email", "")}
     Phone: {form_data.get("phone", "")}
     Company Name: {form_data.get("company", "")}
+    Company Size: {form_data.get("company_size", "")}
     Inquiry Type: {form_data.get("inquiry_type", "")}
     Message / Details Provided by User: {form_data.get("message", "")}
 
@@ -855,10 +873,12 @@ SPARS Website Notification System"""
 
     <p>
       <strong>📄 Inquiry Details</strong><br>
-      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Full Name:</strong> {form_data.get("name", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>First Name:</strong> {form_data.get("first_name", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Last Name:</strong> {form_data.get("last_name", "")}<br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Email:</strong> {form_data.get("email", "")}<br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Phone:</strong> {form_data.get("phone", "")}<br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Company Name:</strong> {form_data.get("company", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Company Size:</strong> {form_data.get("company_size", "")}<br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Inquiry Type:</strong> {form_data.get("inquiry_type", "")}<br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Message / Details Provided by User:</strong> {form_data.get("message", "")}
     </p>
@@ -899,11 +919,13 @@ A new inquiry has been submitted through the 'Talk To Sales' form on the SPARS w
 
 ▲ Lead Details
     Contact Information:
-    Name: {form_data.get("name", "")}
+    First Name: {form_data.get("first_name", "")}
+    Last Name: {form_data.get("last_name", "")}
     Email Address: {form_data.get("email", "")}
     Contact Number: {form_data.get("phone", "")}
     Company Name: {form_data.get("company", "")}
-    Message: {form_data.get("message", "")}
+    Company Size: {form_data.get("company_size", "")}
+    Additional Information: {form_data.get("additional_information", "")}
 
     Requirements:
     Current ERP System (if any): {form_data.get("current_system", "")}
@@ -939,11 +961,13 @@ SPARS Website Notification System"""
     <p>
       <strong>▲ Lead Details</strong><br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Contact Information:</strong><br>
-      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Name:</strong> {form_data.get("name", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>First Name:</strong> {form_data.get("first_name", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Last Name:</strong> {form_data.get("last_name", "")}<br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Email Address:</strong> {form_data.get("email", "")}<br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Contact Number:</strong> {form_data.get("phone", "")}<br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Company Name:</strong> {form_data.get("company", "")}<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Message:</strong> {form_data.get("message", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Company Size:</strong> {form_data.get("company_size", "")}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<strong>Additional Information:</strong> {form_data.get("additional_information", "")}<br>
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Requirements:</strong><br>
       &nbsp;&nbsp;&nbsp;&nbsp;<strong>Current ERP System (if any):</strong> {form_data.get("current_system", "")}<br>
